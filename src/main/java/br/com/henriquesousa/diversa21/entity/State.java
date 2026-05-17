@@ -22,10 +22,10 @@ public class State {
     @Column(nullable = false, unique = true)
     private UUID uid;
 
-    @Column(nullable = false, unique = false)
+    @Column(nullable = false)
     private String name;
 
-    @Column(nullable = false, unique = false)
+    @Column(nullable = false)
     private String code;
 
     @ManyToOne(fetch = FetchType.LAZY)
