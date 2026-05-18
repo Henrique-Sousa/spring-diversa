@@ -11,8 +11,8 @@
 	<groupId>br.com.henriquesousa</groupId>
 	<artifactId>diversa21</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name/>
-	<description/>
+    <name>diversa21</name>
+    <description>Alternative backend for Diversa21</description>
 	<url/>
 	<licenses>
 		<license/>
