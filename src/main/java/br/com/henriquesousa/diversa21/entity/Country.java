@@ -26,7 +26,7 @@ public class Country {
     @Column(nullable = false)
     private String name;
 
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String code;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "country")
