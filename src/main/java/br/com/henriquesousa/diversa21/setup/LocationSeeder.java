@@ -7,8 +7,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
+import br.com.henriquesousa.diversa21.entity.City;
 import br.com.henriquesousa.diversa21.entity.Country;
 import br.com.henriquesousa.diversa21.entity.State;
+import br.com.henriquesousa.diversa21.repository.CityRepository;
 import br.com.henriquesousa.diversa21.repository.CountryRepository;
 import br.com.henriquesousa.diversa21.repository.StateRepository;
 
@@ -19,16 +21,22 @@ public class LocationSeeder implements CommandLineRunner {
 
     private final CountryRepository countryRepository;
     private final StateRepository stateRepository;
+    private final CityRepository cityRepository; 
 
-    public LocationSeeder(CountryRepository countryRepository, StateRepository stateRepository) {
+    public LocationSeeder(
+            CountryRepository countryRepository,
+            StateRepository stateRepository,
+            CityRepository cityRepository
+            ) {
         this.countryRepository = countryRepository;
         this.stateRepository = stateRepository; 
+        this.cityRepository = cityRepository; 
     }
 
     @Override
     public void run(String... args) throws Exception {
         try {
-            Country country1 = countryRepository.findByCode("BR").orElseGet(() -> {
+            Country brasil = countryRepository.findByCode("BR").orElseGet(() -> {
                 Country c = new Country();
                 c.setUid(UUID.fromString("82892d93-4e91-4f53-9ede-bce5902db19c"));
                 c.setName("Brazil");
@@ -37,7 +45,7 @@ public class LocationSeeder implements CommandLineRunner {
                 return countryRepository.saveAndFlush(c);
             });
 
-            Country country2 = countryRepository.findByCode("PT").orElseGet(() -> {
+            Country portugal = countryRepository.findByCode("PT").orElseGet(() -> {
                 Country c = new Country();
                 c.setUid(UUID.fromString("67afd9d1-3753-4e7d-8526-88e4f4a9fae2"));
                 c.setName("Portugal");
@@ -46,43 +54,97 @@ public class LocationSeeder implements CommandLineRunner {
                 return countryRepository.saveAndFlush(c);
             });
 
-            if (!stateRepository.existsByCode("MS")) {
-                State state1 = new State();
-                state1.setUid(UUID.fromString("018a0996-dbea-4f15-9ac1-e24a77d86abb"));
-                state1.setName("Mato Grosso do Sul");
-                state1.setCode("MS");
-                state1.setCountry(country1);
-                stateRepository.saveAndFlush(state1);
+            State matoGrossoDoSul = stateRepository.findByCode("MS").orElseGet(() -> {
+                State s = new State();
+                s.setUid(UUID.fromString("018a0996-dbea-4f15-9ac1-e24a77d86abb"));
+                s.setName("Mato Grosso do Sul");
+                s.setCode("MS");
+                s.setCountry(brasil);
                 LOGGER.debug("LocationSeeder:: Inserted state: MS");
-            }
+                return stateRepository.saveAndFlush(s);
+            });
 
-            if (!stateRepository.existsByCode("MG")) {
-                State state2 = new State();
-                state2.setUid(UUID.fromString("b2fdf24d-a274-49dc-a3d3-94c09089c481"));
-                state2.setName("Minas Gerais");
-                state2.setCode("MG");
-                state2.setCountry(country1);
-                stateRepository.saveAndFlush(state2);
+            State minasGerais = stateRepository.findByCode("MG").orElseGet(() -> {
+                State s = new State();
+                s.setUid(UUID.fromString("b2fdf24d-a274-49dc-a3d3-94c09089c481"));
+                s.setName("Minas Gerais");
+                s.setCode("MG");
+                s.setCountry(brasil);
+                stateRepository.saveAndFlush(s);
                 LOGGER.debug("LocationSeeder:: Inserted state: MG");
-            }
+                return stateRepository.saveAndFlush(s);
+            });
 
-            if (!stateRepository.existsByCode("DL")) {
-                State state3 = new State();
-                state3.setUid(UUID.fromString("6ebdc61a-4160-487d-96ed-4d06d3d0cbd5"));
-                state3.setName("Douro Litoral");
-                state3.setCode("DL");
-                state3.setCountry(country2);
-                stateRepository.saveAndFlush(state3);
-            }
+            State douroLitoral = stateRepository.findByCode("DL").orElseGet(() -> {
+                State s = new State();
+                s.setUid(UUID.fromString("6ebdc61a-4160-487d-96ed-4d06d3d0cbd5"));
+                s.setName("Douro Litoral");
+                s.setCode("DL");
+                s.setCountry(portugal);
+                stateRepository.saveAndFlush(s);
+                LOGGER.debug("LocationSeeder:: Inserted state: MG");
+                return stateRepository.saveAndFlush(s);
+            });
 
-            if (!stateRepository.existsByCode("CO")) {
-                State state4 = new State();
-                state4.setUid(UUID.fromString("f006d303-9a57-44a0-9c90-6674c1e93b66"));
-                state4.setName("Coimbra");
-                state4.setCode("CO");
-                state4.setCountry(country2);
-                stateRepository.saveAndFlush(state4);
-            }
+            State coimbra = stateRepository.findByCode("CO").orElseGet(() -> {
+                State s = new State();
+                s.setUid(UUID.fromString("f006d303-9a57-44a0-9c90-6674c1e93b66"));
+                s.setName("Coimbra");
+                s.setCode("CO");
+                s.setCountry(portugal);
+                stateRepository.saveAndFlush(s);
+                LOGGER.debug("LocationSeeder:: Inserted state: MG");
+                return stateRepository.saveAndFlush(s);
+            });
+
+            City campoGrande = new City();
+            campoGrande.setUid(UUID.fromString("2bbb1fb0-6e97-4b3e-aa20-cae18c2dcfaf"));
+            campoGrande.setName("Campo Grande");
+            campoGrande.setState(matoGrossoDoSul);
+            cityRepository.saveAndFlush(campoGrande);
+            LOGGER.debug("LocationSeeder:: Inserted city: Campo Grande");
+
+            City beloHorizonte = new City();
+            beloHorizonte.setUid(UUID.fromString("3d38dc97-7fb5-4993-9059-7dc26b0a1ac6"));
+            beloHorizonte.setName("Belo Horizonte");
+            beloHorizonte.setState(minasGerais);
+            cityRepository.saveAndFlush(beloHorizonte);
+            LOGGER.debug("LocationSeeder:: Inserted city: Belo Horizonte");
+
+            City uberlandia = new City();
+            uberlandia.setUid(UUID.fromString("8122c4f2-2665-4814-8592-3d2e49efdcd2"));
+            uberlandia.setName("Uberlândia");
+            uberlandia.setState(minasGerais);
+            cityRepository.saveAndFlush(uberlandia);
+            LOGGER.debug("LocationSeeder:: Inserted city: Uberlândia");
+
+            City figueiraDaFoz = new City();
+            figueiraDaFoz.setUid(UUID.fromString("b71ee106-b4f7-4e36-961a-e0c0c406f2fe"));
+            figueiraDaFoz.setName("Figueira da Foz");
+            figueiraDaFoz.setState(coimbra);
+            cityRepository.saveAndFlush(figueiraDaFoz);
+            LOGGER.debug("LocationSeeder:: Inserted city: Figueira da Foz");
+
+            City cantanhede = new City();
+            cantanhede.setUid(UUID.fromString("512e7b04-4627-40d2-9dcf-3ec6b73a6b73"));
+            cantanhede.setName("Cantanhede");
+            cantanhede.setState(coimbra);
+            cityRepository.saveAndFlush(cantanhede);
+            LOGGER.debug("LocationSeeder:: Inserted city: Cantanhede");
+
+            City porto = new City();
+            porto.setUid(UUID.fromString("c8546d8a-d35c-4661-841f-58d207344872"));
+            porto.setName("Porto");
+            porto.setState(douroLitoral);
+            cityRepository.saveAndFlush(porto);
+            LOGGER.debug("LocationSeeder:: Inserted city: Porto");
+
+            City vilaNovaDeGaia = new City();
+            vilaNovaDeGaia.setUid(UUID.fromString("cf954069-9904-4659-92de-c9e673c50879"));
+            vilaNovaDeGaia.setName("Vila Nova de Gaia");
+            vilaNovaDeGaia.setState(douroLitoral);
+            cityRepository.saveAndFlush(vilaNovaDeGaia);
+            LOGGER.debug("LocationSeeder:: Inserted city: Vila Nova de Gaia");
 
         } catch (Throwable e) {
             LOGGER.warn("There was an error while seeding location data", e);
