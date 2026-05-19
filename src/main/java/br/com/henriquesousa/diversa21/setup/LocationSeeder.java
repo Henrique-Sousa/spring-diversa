@@ -4,7 +4,6 @@ import java.util.UUID;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
 import br.com.henriquesousa.diversa21.entity.City;
@@ -15,7 +14,7 @@ import br.com.henriquesousa.diversa21.repository.CountryRepository;
 import br.com.henriquesousa.diversa21.repository.StateRepository;
 
 @Component
-public class LocationSeeder implements CommandLineRunner {
+public class LocationSeeder implements Seeder {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(LocationSeeder.class);
 
@@ -34,7 +33,7 @@ public class LocationSeeder implements CommandLineRunner {
     }
 
     @Override
-    public void run(String... args) throws Exception {
+    public void seed() {
         try {
             Country brasil = countryRepository.findByCode("BR").orElseGet(() -> {
                 Country c = new Country();
