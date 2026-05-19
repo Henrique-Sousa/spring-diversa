@@ -11,9 +11,11 @@ public class DatabaseSeeder implements CommandLineRunner {
     private static final Logger LOGGER = LoggerFactory.getLogger(DatabaseSeeder.class);
 
     private final LocationSeeder locationSeeder;
+    private final InstitutionSeeder institutionSeeder; 
 
-    public DatabaseSeeder(LocationSeeder locationSeeder) {
+    public DatabaseSeeder(LocationSeeder locationSeeder, InstitutionSeeder institutionSeeder) {
         this.locationSeeder = locationSeeder;
+        this.institutionSeeder = institutionSeeder;
     }
 
     @Override
@@ -21,6 +23,7 @@ public class DatabaseSeeder implements CommandLineRunner {
         LOGGER.info("Starting database initialization...");
 
         locationSeeder.seed();
+        institutionSeeder.seed();
 
         LOGGER.info("Database initialization completed successfully.");
     }
