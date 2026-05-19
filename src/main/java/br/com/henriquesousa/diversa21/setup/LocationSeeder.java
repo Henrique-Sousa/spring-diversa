@@ -146,7 +146,7 @@ public class LocationSeeder implements CommandLineRunner {
             cityRepository.saveAndFlush(vilaNovaDeGaia);
             LOGGER.debug("LocationSeeder:: Inserted city: Vila Nova de Gaia");
 
-        } catch (Throwable e) {
+        } catch (Exception e) {
             LOGGER.warn("There was an error while seeding location data", e);
         }
     }
