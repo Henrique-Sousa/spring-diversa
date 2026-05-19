@@ -7,6 +7,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import br.com.henriquesousa.diversa21.entity.Country;
 
 public interface CountryRepository extends JpaRepository<Country, Long> {
-    boolean existsByCode(String code);
     Optional<Country> findByCode(String code);
 }
