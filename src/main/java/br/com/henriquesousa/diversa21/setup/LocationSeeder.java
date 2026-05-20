@@ -20,7 +20,12 @@ public class LocationSeeder implements Seeder {
 
     private final CountryRepository countryRepository;
     private final StateRepository stateRepository;
-    private final CityRepository cityRepository; 
+    private final CityRepository cityRepository;
+
+    City campoGrande;
+    City cantanhede;
+    City uberlandia;
+    City porto;
 
     public LocationSeeder(
             CountryRepository countryRepository,
@@ -28,8 +33,8 @@ public class LocationSeeder implements Seeder {
             CityRepository cityRepository
             ) {
         this.countryRepository = countryRepository;
-        this.stateRepository = stateRepository; 
-        this.cityRepository = cityRepository; 
+        this.stateRepository = stateRepository;
+        this.cityRepository = cityRepository;
     }
 
     @Override
@@ -69,7 +74,6 @@ public class LocationSeeder implements Seeder {
                 s.setName("Minas Gerais");
                 s.setCode("MG");
                 s.setCountry(brasil);
-                stateRepository.saveAndFlush(s);
                 LOGGER.debug("LocationSeeder:: Inserted state: MG");
                 return stateRepository.saveAndFlush(s);
             });
@@ -80,8 +84,7 @@ public class LocationSeeder implements Seeder {
                 s.setName("Douro Litoral");
                 s.setCode("DL");
                 s.setCountry(portugal);
-                stateRepository.saveAndFlush(s);
-                LOGGER.debug("LocationSeeder:: Inserted state: MG");
+                LOGGER.debug("LocationSeeder:: Inserted state: DL");
                 return stateRepository.saveAndFlush(s);
             });
 
@@ -91,19 +94,19 @@ public class LocationSeeder implements Seeder {
                 s.setName("Coimbra");
                 s.setCode("CO");
                 s.setCountry(portugal);
-                stateRepository.saveAndFlush(s);
-                LOGGER.debug("LocationSeeder:: Inserted state: MG");
+                LOGGER.debug("LocationSeeder:: Inserted state: CO");
                 return stateRepository.saveAndFlush(s);
             });
 
-            if (!cityRepository.existsByUid(UUID.fromString("2bbb1fb0-6e97-4b3e-aa20-cae18c2dcfaf"))) {
-                City campoGrande = new City();
-                campoGrande.setUid(UUID.fromString(("2bbb1fb0-6e97-4b3e-aa20-cae18c2dcfaf")));
-                campoGrande.setName("Campo Grande");
-                campoGrande.setState(matoGrossoDoSul);
-                cityRepository.saveAndFlush(campoGrande);
+            UUID campoGrandeUid = UUID.fromString("2bbb1fb0-6e97-4b3e-aa20-cae18c2dcfaf");
+            campoGrande = cityRepository.findByUid(campoGrandeUid).orElseGet(() -> {
+                City c = new City();
+                c.setUid(campoGrandeUid);
+                c.setName("Campo Grande");
+                c.setState(matoGrossoDoSul);
                 LOGGER.debug("LocationSeeder:: Inserted city: Campo Grande");
-            }
+                return cityRepository.saveAndFlush(c);
+            });
 
             if (!cityRepository.existsByUid(UUID.fromString("3d38dc97-7fb5-4993-9059-7dc26b0a1ac6"))) {
                 City beloHorizonte = new City();
@@ -114,14 +117,15 @@ public class LocationSeeder implements Seeder {
                 LOGGER.debug("LocationSeeder:: Inserted city: Belo Horizonte");
             }
 
-            if (!cityRepository.existsByUid(UUID.fromString("8122c4f2-2665-4814-8592-3d2e49efdcd2"))) {
-                City uberlandia = new City();
-                uberlandia.setUid(UUID.fromString(("8122c4f2-2665-4814-8592-3d2e49efdcd2")));
-                uberlandia.setName("Uberlândia");
-                uberlandia.setState(minasGerais);
-                cityRepository.saveAndFlush(uberlandia);
+            UUID uberlandiaUid = UUID.fromString("8122c4f2-2665-4814-8592-3d2e49efdcd2");
+            uberlandia = cityRepository.findByUid(uberlandiaUid).orElseGet(() -> {
+                City c = new City();
+                c.setUid(uberlandiaUid);
+                c.setName("Uberlândia");
+                c.setState(minasGerais);
                 LOGGER.debug("LocationSeeder:: Inserted city: Uberlândia");
-            }
+                return cityRepository.saveAndFlush(c);
+            });
 
             if (!cityRepository.existsByUid(UUID.fromString("b71ee106-b4f7-4e36-961a-e0c0c406f2fe"))) {
                 City figueiraDaFoz = new City();
@@ -132,23 +136,25 @@ public class LocationSeeder implements Seeder {
                 LOGGER.debug("LocationSeeder:: Inserted city: Figueira da Foz");
             }
 
-            if (!cityRepository.existsByUid(UUID.fromString("512e7b04-4627-40d2-9dcf-3ec6b73a6b73"))) {
-                City cantanhede = new City();
-                cantanhede.setUid(UUID.fromString(("512e7b04-4627-40d2-9dcf-3ec6b73a6b73")));
-                cantanhede.setName("Cantanhede");
-                cantanhede.setState(coimbra);
-                cityRepository.saveAndFlush(cantanhede);
+            UUID cantanhedeUid = UUID.fromString("512e7b04-4627-40d2-9dcf-3ec6b73a6b73");
+            cantanhede = cityRepository.findByUid(cantanhedeUid).orElseGet(() -> {
+                City c = new City();
+                c.setUid(cantanhedeUid);
+                c.setName("Cantanhede");
+                c.setState(coimbra);
                 LOGGER.debug("LocationSeeder:: Inserted city: Cantanhede");
-            }
+                return cityRepository.saveAndFlush(c);
+            });
 
-            if (!cityRepository.existsByUid(UUID.fromString("c8546d8a-d35c-4661-841f-58d207344872"))) {
-                City porto = new City();
-                porto.setUid(UUID.fromString(("c8546d8a-d35c-4661-841f-58d207344872")));
-                porto.setName("Porto");
-                porto.setState(douroLitoral);
-                cityRepository.saveAndFlush(porto);
+            UUID portoUid = UUID.fromString("c8546d8a-d35c-4661-841f-58d207344872");
+            porto = cityRepository.findByUid(portoUid).orElseGet(() -> {
+                City c = new City();
+                c.setUid(portoUid);
+                c.setName("Porto");
+                c.setState(douroLitoral);
                 LOGGER.debug("LocationSeeder:: Inserted city: Porto");
-            }
+                return cityRepository.saveAndFlush(c);
+            });
 
             if (!cityRepository.existsByUid(UUID.fromString("cf954069-9904-4659-92de-c9e673c50879"))) {
                 City vilaNovaDeGaia = new City();

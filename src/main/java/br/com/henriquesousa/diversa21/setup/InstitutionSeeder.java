@@ -7,7 +7,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import br.com.henriquesousa.diversa21.entity.Institution;
-import br.com.henriquesousa.diversa21.repository.CityRepository;
 import br.com.henriquesousa.diversa21.repository.InstitutionRepository;
 
 @Component
@@ -16,14 +15,14 @@ public class InstitutionSeeder implements Seeder {
     private static final Logger LOGGER = LoggerFactory.getLogger(InstitutionSeeder.class);
 
     private final InstitutionRepository institutionRepository;
-    private final CityRepository cityRepository;
+    private final LocationSeeder locationSeeder;
 
     public InstitutionSeeder(
             InstitutionRepository institutionRepository,
-            CityRepository cityRepository
+            LocationSeeder locationSeeder
     ) {
         this.institutionRepository = institutionRepository;
-        this.cityRepository = cityRepository;
+        this.locationSeeder = locationSeeder;
     }
 
     @Override
@@ -36,7 +35,7 @@ public class InstitutionSeeder implements Seeder {
                 i.setSlug("Clinica-Sao-Rafael");
                 i.setDescription("Clínica São Rafael, manda email aqui: contato@saorafael.com.");
                 i.setAddress("Av. das Flores, 123");
-                i.setCity(cityRepository.findByUid(UUID.fromString("2bbb1fb0-6e97-4b3e-aa20-cae18c2dcfaf")).get());
+                i.setCity(locationSeeder.campoGrande);
                 i.setTelephone("2147483647");
                 i.setPostalCode("SR2001");
                 i.setEmail("contato@saorafael.com");
@@ -52,7 +51,7 @@ public class InstitutionSeeder implements Seeder {
                 i.setSlug("Centro-de-Imagem");
                 i.setDescription("Centro de Imagem Teste, manda email aqui: imaginacao@centroimagem.com.");
                 i.setAddress("Rua do Diagnóstico, 45");
-                i.setCity(cityRepository.findByUid(UUID.fromString("512e7b04-4627-40d2-9dcf-3ec6b73a6b73")).get());
+                i.setCity(locationSeeder.cantanhede);
                 i.setTelephone("2147483647");
                 i.setPostalCode("CI3002");
                 i.setEmail("imaginacao@centroimagem.com");
@@ -68,7 +67,7 @@ public class InstitutionSeeder implements Seeder {
                 i.setSlug("Laboratorio-Modelo");
                 i.setDescription("Laboratório Modelo, manda email aqui: lab@modelolabs.com.");
                 i.setAddress("Alameda dos Testes, 78");
-                i.setCity(cityRepository.findByUid(UUID.fromString("8122c4f2-2665-4814-8592-3d2e49efdcd2")).get());
+                i.setCity(locationSeeder.uberlandia);
                 i.setTelephone("2147483647");
                 i.setPostalCode("LM4003");
                 i.setEmail("lab@modelolabs.com");
@@ -84,7 +83,7 @@ public class InstitutionSeeder implements Seeder {
                 i.setSlug("Urgencia-Central");
                 i.setDescription("Urgência Central Teste, manda email aqui: emergencia@urgenciacentral.com.");
                 i.setAddress("Praça da Emergência, s/n");
-                i.setCity(cityRepository.findByUid(UUID.fromString("c8546d8a-d35c-4661-841f-58d207344872")).get());
+                i.setCity(locationSeeder.porto);
                 i.setTelephone("2147483647");
                 i.setPostalCode("UC5004");
                 i.setEmail("emergencia@urgenciacentral.com");
