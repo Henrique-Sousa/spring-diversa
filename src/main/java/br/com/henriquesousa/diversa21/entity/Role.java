@@ -9,7 +9,9 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
+import jakarta.persistence.Table;
 
+@Table(name = "role")
 @Entity
 public class Role {
     @Id
@@ -19,7 +21,7 @@ public class Role {
 
     @ManyToMany
     @JoinTable(
-        name = "roles_privileges", 
+        name = "role_privilege", 
         joinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"), 
         inverseJoinColumns = @JoinColumn(name = "privilege_id", referencedColumnName = "id"))
     private Collection<Privilege> privileges;
