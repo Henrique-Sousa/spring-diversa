@@ -1,5 +1,7 @@
 package br.com.henriquesousa.diversa21.entity;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 import jakarta.persistence.Column;
@@ -10,6 +12,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -29,6 +32,9 @@ public class City {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "state_id")
     private State state;
+
+    @OneToMany(mappedBy = "city", fetch = FetchType.LAZY)
+    private List<User> users = new ArrayList<>();
 
     public Long getId() {
         return id;
